@@ -1,0 +1,74 @@
+<template>
+  <li>
+    <label>
+      <input type="checkbox" :checked="todo.done" @change="handleCheck(todo.id)"/>
+      <!-- <input type="checkbox" v-model="todo.done"/> 这种方法也可以实现效果，但是违反了不该修改props传值的原则 -->
+      <span>{{todo.name}}</span>
+    </label>
+    <button class="btn btn-danger" @click="handleDelete(todo.id)">删除</button>
+  </li>
+</template>
+
+<script>
+export default {
+  name: "TodoItem",
+  props: ['todo', 'checkTodo', 'deleteTodo'],
+  methods: {
+    // 国轩或取消勾选 
+    handleCheck(id){
+      // 在App的todos数据中修改状态
+      this.checkTodo(id);
+    },
+    // 删除
+    handleDelete(id){
+      if (confirm('确认删除么？')) {
+        this.deleteTodo(id);
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+/*item*/
+li {
+  list-style: none;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+li label {
+  float: left;
+  cursor: pointer;
+}
+
+li label li input {
+  vertical-align: middle;
+  margin-right: 6px;
+  position: relative;
+  top: -1px;
+}
+
+li button {
+  float: right;
+  display: none;
+  margin-top: 3px;
+}
+
+li:before {
+  content: initial;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+li:hover {
+  background-color: #ddd;
+}
+li:hover button {
+  display: block;
+}
+</style>
