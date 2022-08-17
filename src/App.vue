@@ -6,8 +6,6 @@
 
         <TodoList
           :todos="todos"
-          :checkTodo="checkTodo"
-          :deleteTodo="deleteTodo"
         ></TodoList>
 
         <TodoFooter
@@ -21,6 +19,8 @@
 </template>
 
 <script>
+import pubsub from 'pubsub-js';
+
 import TodoHeader from "./components/TodoHeader";
 import TodoList from "./components/TodoList";
 import TodoFooter from "./components/TodoFooter";
@@ -73,6 +73,14 @@ export default {
         localStorage.setItem("todos", JSON.stringify(value));
       },
     },
+  },
+  mounted() {
+    this.$bus.$on('checkTodo', this.checkTodo);
+    this.pubIdDeleteTodo = pubsub.subscribe('deleteTodo', (_, id) => {this.deleteTodo(id)})
+  },
+  beforeDestroy() {
+    this.$bus.$off('checkTodo');
+    pubsub.unsubscribe(this.pubIdDeleteTodo);
   },
 };
 </script>

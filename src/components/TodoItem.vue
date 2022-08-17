@@ -10,19 +10,21 @@
 </template>
 
 <script>
+import pubsub from 'pubsub-js';
+
 export default {
   name: "TodoItem",
-  props: ['todo', 'checkTodo', 'deleteTodo'],
+  props: ['todo'],
   methods: {
-    // 国轩或取消勾选 
+    // 勾选或取消勾选 
     handleCheck(id){
       // 在App的todos数据中修改状态
-      this.checkTodo(id);
+      this.$bus.$emit('checkTodo', id);
     },
     // 删除
     handleDelete(id){
       if (confirm('确认删除么？')) {
-        this.deleteTodo(id);
+        pubsub.publish('deleteTodo', id);
       }
     },
   },
