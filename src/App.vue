@@ -31,11 +31,7 @@ export default {
 
   data() {
     return {
-      todos: [
-        { id: "001", name: "吃饭", done: true },
-        { id: "002", name: "喝酒", done: false },
-        { id: "003", name: "工作", done: true },
-      ],
+      todos: JSON.parse(localStorage.getItem("todos")) || [],
     };
   },
   methods: {
@@ -68,6 +64,14 @@ export default {
       this.todos = this.todos.filter((todo) => {
         return !todo.done;
       });
+    },
+  },
+  watch: {
+    todos: {
+      deep: true,
+      handler(value) {
+        localStorage.setItem("todos", JSON.stringify(value));
+      },
     },
   },
 };
