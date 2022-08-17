@@ -76,6 +76,13 @@ export default {
   },
   mounted() {
     this.$bus.$on('checkTodo', this.checkTodo);
+    this.$bus.$on('updateTodo', (id, name) => {
+      this.todos.forEach((todo) => {
+        if (todo.id === id) {
+          todo.name = name;
+        }
+      })
+    });
     this.pubIdDeleteTodo = pubsub.subscribe('deleteTodo', (_, id) => {this.deleteTodo(id)})
   },
   beforeDestroy() {
@@ -114,6 +121,13 @@ body {
 .btn-danger:hover {
   color: #fff;
   background-color: #bd362f;
+}
+
+.btn-edit {
+  color: #fff;
+  background-color: skyblue;
+  border: 1px solid rgb(15, 91, 121);
+  margin-right: 5px;
 }
 
 .btn:focus {
