@@ -13,7 +13,6 @@ import { nanoid } from "nanoid";
  
 export default {
   name: "TodoHeader",
-  props: ['addTodo'],
   methods: {
     add(event) {
       // 校验数据，不能为空
@@ -26,7 +25,7 @@ export default {
       event.target.value = '';
       // console.log(todoObj);
       // 调用父组件方法添加数据
-      this.addTodo(todoObj);
+      this.$emit('addTodo', todoObj);
     },
   },
 };

@@ -14,7 +14,7 @@
 <script>
 export default {
   name: "TodoFooter",
-  props: ["todos", "checkAllTodos", "clearTodos"],
+  props: ["todos"],
   computed: {
     // 被勾选的todo项个数
     doneTotal() {
@@ -28,7 +28,7 @@ export default {
         return this.doneTotal === this.todos.length && this.todos.length > 0;
       },
       set(checked) {
-        this.checkAllTodos(checked);
+        this.$emit('checkAllTodos', checked);
       },
     },
   },
@@ -38,7 +38,7 @@ export default {
   //   },
     clearAll(){
       if (confirm('确定删除所有选中项？')) {
-        this.clearTodos();
+        this.$emit('clearTodos');
       }
     }
   }
